@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/07/16/Hexo-部署到GitHub/image-20190717104757029.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/16/Hexo-部署到GitHub/image-20190717142127302.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/16/Hexo-部署到GitHub/image-20190717144201928.png">
-<meta property="og:updated_time" content="2019-07-17T06:43:56.000Z">
+<meta property="og:updated_time" content="2019-07-17T12:42:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 部署到GitHub">
 <meta name="twitter:description" content="前面两篇博文已经教我们完成了 Hexo 安装和生成和在 GitHub 上建立了 GitHub Pages。这篇博文将是创建自己的微博的最后一篇，如何将 Hexo 部署到 GitHub中。  GitHub 内的设置 SSH 首先在进入 [GitHub官网][https://github.com]  并登录好自己的账号，点击右上角头像图标  再点击左边的 SSH and GPG keys:  点击 N">
@@ -131,8 +131,9 @@
 
 <h5 id="第六步、SSH-Key配置成功"><a href="#第六步、SSH-Key配置成功" class="headerlink" title="第六步、SSH Key配置成功"></a>第六步、SSH Key配置成功</h5><p>本机已成功连接到github。</p>
 <hr>
-<h3 id="将本地的Hexo文件更新到Github的库中"><a href="#将本地的Hexo文件更新到Github的库中" class="headerlink" title="将本地的Hexo文件更新到Github的库中"></a>将本地的Hexo文件更新到Github的库中</h3><h5 id="第一步、登录Github打开自己的项目-username-github-io"><a href="#第一步、登录Github打开自己的项目-username-github-io" class="headerlink" title="第一步、登录Github打开自己的项目 username.github.io"></a>第一步、登录Github打开自己的项目 username.github.io</h5><p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717104757029.png" alt="image-20190717104757029"></p>
-<h5 id="第二步、打开之后，点击Clone-or-download，点击Use-SSH类型地址"><a href="#第二步、打开之后，点击Clone-or-download，点击Use-SSH类型地址" class="headerlink" title="第二步、打开之后，点击Clone or download，点击Use SSH类型地址"></a>第二步、打开之后，点击Clone or download，点击Use SSH类型地址</h5><p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717142127302.png" alt="image-20190717142127302"></p>
+<h3 id="将本地的Hexo文件更新到Github的库中"><a href="#将本地的Hexo文件更新到Github的库中" class="headerlink" title="将本地的Hexo文件更新到Github的库中"></a>将本地的Hexo文件更新到Github的库中</h3><h5 id="第一步、登录Github打开自己的项目-username-github-io"><a href="#第一步、登录Github打开自己的项目-username-github-io" class="headerlink" title="第一步、登录Github打开自己的项目 username.github.io"></a>第一步、登录Github打开自己的项目 username.github.io</h5><p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717104757029.png" alt="点击自己的项目"></p>
+<h5 id="第二步、打开之后，点击Clone-or-download，点击Use-SSH类型地址"><a href="#第二步、打开之后，点击Clone-or-download，点击Use-SSH类型地址" class="headerlink" title="第二步、打开之后，点击Clone or download，点击Use SSH类型地址"></a>第二步、打开之后，点击Clone or download，点击Use SSH类型地址</h5><p>​    如果显示不是 Use SSH，则调到第三步。</p>
+<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717142127302.png" alt="点击 Use SSh"></p>
 <h5 id="第三步、复制地址"><a href="#第三步、复制地址" class="headerlink" title="第三步、复制地址"></a>第三步、复制地址</h5><p>点击复制图标，复制出 SSH 地址</p>
 <h5 id="第四步、打开你一开始创建的Hexo文件夹（如-log-Hexo），用记事本打开刚文件夹下的-config-yml文件"><a href="#第四步、打开你一开始创建的Hexo文件夹（如-log-Hexo），用记事本打开刚文件夹下的-config-yml文件" class="headerlink" title="第四步、打开你一开始创建的Hexo文件夹（如/log/Hexo），用记事本打开刚文件夹下的_config.yml文件"></a>第四步、打开你一开始创建的Hexo文件夹（如/log/Hexo），用记事本打开刚文件夹下的_config.yml文件</h5><h5 id="第五步、在配置文件里作如下修改，保存"><a href="#第五步、在配置文件里作如下修改，保存" class="headerlink" title="第五步、在配置文件里作如下修改，保存"></a>第五步、在配置文件里作如下修改，保存</h5><p>找到 # Deployment</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: 这里填入第三步复制出来的 SSH 地址</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
@@ -148,13 +149,13 @@
 
 <p>这样，你再执行<code>hexo g -d</code>，你的博客就部署到Github上了。</p>
 <h5 id="第七步、在浏览器上输入自己的主页地址"><a href="#第七步、在浏览器上输入自己的主页地址" class="headerlink" title="第七步、在浏览器上输入自己的主页地址"></a>第七步、在浏览器上输入自己的主页地址</h5><p>在浏览器上输入Github Pager为我们生成的外链就可以看到自己的微博了，是不是很兴奋</p>
-<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717144201928.png" alt="image-20190717144201928"></p>
+<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717144201928.png" alt="输入网址进入首页"></p>
 <p>到此就已经完成了在 GitHub Pages和  Hexo 配合部署自己的博客的 。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/16/Hexo-部署到GitHub/" data-id="cjy6vsxk10001gm5ywt4b7pm2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/16/Hexo-部署到GitHub/" data-id="cjy78k76600017k5yq4cn7dog" class="article-share-link">Share</a>
       
       
     </footer>
