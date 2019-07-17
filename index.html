@@ -300,67 +300,14 @@
 
       
         
-          
-            <p>前面两篇博文已经教我们完成了 Hexo 安装和生成和在 GitHub 上建立了 GitHub Pages。这篇博文将是创建自己的微博的最后一篇，如何将 Hexo 部署到 GitHub中。</p>
-<hr>
-<h3 id="GitHub-内的设置-SSH"><a href="#GitHub-内的设置-SSH" class="headerlink" title="GitHub 内的设置 SSH"></a>GitHub 内的设置 SSH</h3><p> 首先在进入 [GitHub官网][<a href="https://github.com]" target="_blank" rel="noopener">https://github.com]</a>  并登录好自己的账号，点击右上角头像图标</p>
-<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717134943255.png" alt="点击头像选择Settings"></p>
-<p>再点击左边的 SSH and GPG keys:</p>
-<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717135414209.png" alt="由于已经设置了SSH keys 可能你看到的会和我略不同"></p>
-<p>点击 New SSH key，Title按照自己的想法填写，Key来自于你在自己机器上建立的SSH Key 的内容：</p>
-<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717135555843.png" alt="SSH keys 设置页面"></p>
-<p>下面详细讲解如何在本机生成SSH Key，并复制填入到 上图的 Key中后点击 Add SSH key 就完成了 GitHub SSH的登录设置</p>
-<hr>
-<h3 id="本地设置SSH"><a href="#本地设置SSH" class="headerlink" title="本地设置SSH"></a>本地设置SSH</h3><h5 id="第一步、看看是否已经存在-SSH-密钥（key）"><a href="#第一步、看看是否已经存在-SSH-密钥（key）" class="headerlink" title="第一步、看看是否已经存在 SSH 密钥（key）"></a>第一步、看看是否已经存在 SSH 密钥（key）</h5><p>首先，在本地打开终端，输入指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.ssh</span><br></pre></td></tr></table></figure>
-
-<p>如果存在此目录则表示本机已经存在了 SSH 则忽略第二步，直接进入第三步。</p>
-<h5 id="第二步、创建一对新的SSH密钥（key）"><a href="#第二步、创建一对新的SSH密钥（key）" class="headerlink" title="第二步、创建一对新的SSH密钥（key）"></a>第二步、创建一对新的SSH密钥（key）</h5><p>使用指令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
-
-<p>这里的email 按照自己实际email填写。</p>
-<p>回车以后按照提示操作，在需要输入密码的地方直接回车就可，具体提示这里不给出操作，比较简单。</p>
-<h5 id="第三步、在-GitHub-账户中添加你的公钥"><a href="#第三步、在-GitHub-账户中添加你的公钥" class="headerlink" title="第三步、在 GitHub 账户中添加你的公钥"></a>第三步、在 GitHub 账户中添加你的公钥</h5><p>使用指令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<p>这里要注意，在第二步创建 SSH 密钥的时候如果你并没有改变文件名和文件路径就按照上面指令输入，否则输入 vim 你设置的路径和文件名。回车执行以后，再从终端里把 vim 打开的文件内容复制出来，填入到上面图里的 key 里 并点击  Add SSH key 完成设置</p>
-<h5 id="第四步、测试"><a href="#第四步、测试" class="headerlink" title="第四步、测试"></a>第四步、测试</h5><p>输入一下指令查看是否成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>如果出现类似下面的反馈</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host &apos;github.com (207.97.227.239)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
-
-<p>输入 yes 然后你就会看见成功的提示。</p>
-<p>如果提示失败 使用下面指令后再重试：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add .ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<h5 id="第五步、设置用户信息"><a href="#第五步、设置用户信息" class="headerlink" title="第五步、设置用户信息"></a>第五步、设置用户信息</h5><p>现在你已经可以通过SSH链接到GitHub了，还有一些个人信息需要完善的。 Git会根据用户的名字和邮箱来记录提交。GitHub也是用这些信息来做权限的处理，输入下面的代码进行个人信息的设置，把名称和邮箱替换成你自己的，名字根据自己的喜好自己取，而不是GitHub的昵称。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;ryanlijianchang&quot;//用户名</span><br><span class="line">$ git config --global user.email  &quot;liji.anchang@163.com&quot;//填写自己的邮箱</span><br></pre></td></tr></table></figure>
-
-<h5 id="第六步、SSH-Key配置成功"><a href="#第六步、SSH-Key配置成功" class="headerlink" title="第六步、SSH Key配置成功"></a>第六步、SSH Key配置成功</h5><p>本机已成功连接到github。</p>
-<hr>
-<h3 id="将本地的Hexo文件更新到Github的库中"><a href="#将本地的Hexo文件更新到Github的库中" class="headerlink" title="将本地的Hexo文件更新到Github的库中"></a>将本地的Hexo文件更新到Github的库中</h3><h5 id="第一步、登录Github打开自己的项目-username-github-io"><a href="#第一步、登录Github打开自己的项目-username-github-io" class="headerlink" title="第一步、登录Github打开自己的项目 username.github.io"></a>第一步、登录Github打开自己的项目 username.github.io</h5><p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717104757029.png" alt="点击自己的项目"></p>
-<h5 id="第二步、打开之后，点击Clone-or-download，点击Use-SSH类型地址"><a href="#第二步、打开之后，点击Clone-or-download，点击Use-SSH类型地址" class="headerlink" title="第二步、打开之后，点击Clone or download，点击Use SSH类型地址"></a>第二步、打开之后，点击Clone or download，点击Use SSH类型地址</h5><p>​    如果显示不是 Use SSH，则调到第三步。</p>
-<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717142127302.png" alt="点击 Use SSh"></p>
-<h5 id="第三步、复制地址"><a href="#第三步、复制地址" class="headerlink" title="第三步、复制地址"></a>第三步、复制地址</h5><p>点击复制图标，复制出 SSH 地址</p>
-<h5 id="第四步、打开你一开始创建的Hexo文件夹（如-log-Hexo），用记事本打开刚文件夹下的-config-yml文件"><a href="#第四步、打开你一开始创建的Hexo文件夹（如-log-Hexo），用记事本打开刚文件夹下的-config-yml文件" class="headerlink" title="第四步、打开你一开始创建的Hexo文件夹（如/log/Hexo），用记事本打开刚文件夹下的_config.yml文件"></a>第四步、打开你一开始创建的Hexo文件夹（如/log/Hexo），用记事本打开刚文件夹下的_config.yml文件</h5><h5 id="第五步、在配置文件里作如下修改，保存"><a href="#第五步、在配置文件里作如下修改，保存" class="headerlink" title="第五步、在配置文件里作如下修改，保存"></a>第五步、在配置文件里作如下修改，保存</h5><p>找到 # Deployment</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: 这里填入第三步复制出来的 SSH 地址</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<h5 id="第六步、在Hexo文件夹下执行："><a href="#第六步、在Hexo文件夹下执行：" class="headerlink" title="第六步、在Hexo文件夹下执行："></a>第六步、在Hexo文件夹下执行：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>或者直接执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
-
-<p>执行完之后会让你输入github的账号和密码，输入完后就可以登录我们自己的部署在Github Pages服务器上的博客了。</p>
-<p>假如这时候，报错 <code>ERROR Deployer not found: git</code>，那么就是你的deployer没有安装成功，你需要执行如下命令再安装一次：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<p>这样，你再执行<code>hexo g -d</code>，你的博客就部署到Github上了。</p>
-<h5 id="第七步、在浏览器上输入自己的主页地址"><a href="#第七步、在浏览器上输入自己的主页地址" class="headerlink" title="第七步、在浏览器上输入自己的主页地址"></a>第七步、在浏览器上输入自己的主页地址</h5><p>在浏览器上输入Github Pager为我们生成的外链就可以看到自己的微博了，是不是很兴奋</p>
-<p><img src="/2019/07/16/Hexo-部署到GitHub/image-20190717144201928.png" alt="输入网址进入首页"></p>
-<p>到此就已经完成了在 GitHub Pages和  Hexo 配合部署自己的博客的 。</p>
-
-          
+          <p>前面两篇博文已经教我们完成了 Hexo 安装和生成和在 GitHub 上建立了 GitHub Pages。这篇博文将是创建自己的微博的最后一篇，如何将 Hexo 部署到 GitHub中。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/16/Hexo-部署到GitHub/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -477,31 +424,16 @@
 
       
         
-          
-            <p>上一篇博文介绍 MAC 系统安装 Hexo，这篇介绍如何申请 GitHub 账号，并开通GitHub Pages。</p>
+          <p>上一篇博文介绍 MAC 系统安装 Hexo，这篇介绍如何申请 GitHub 账号，并开通GitHub Pages。</p>
 <p>GitHub 官网：https//github.com/</p>
 <p>如果你没有 GitHub 账号，就去官网新建一个，建立账号过程就不介绍了，记得去邮箱验证一下。如果你已经有账号直接登录。下面重点说说 GitHub Pages 的设置</p>
-<p>设置步骤：</p>
-<ul>
-<li><p>建立 new repository</p>
-<p>登录 GitHub 账号 进入首页 点击右上角 ➕ 图标 然后点击如图 new repository </p>
-<p><img src="/2019/07/16/GitHub-Pages申请和设置/image-20190717103626536.png" alt="New respostory"></p>
-<p> 进入下面的界面</p>
-<p><img src="/2019/07/16/GitHub-Pages申请和设置/image-20190717104053269.png" alt="注意：填写的名字必须与Owner 里面的名字一模一样，否则后面的步骤可能会失败！"></p>
-<p>填写 Repository name ，填写完成后，其他选项保持不变直接点击下面 Create repository 按钮完成创建。</p>
-</li>
-<li><p>开启 GitHub Pages 功能</p>
-<p>点击网页右上角头像，点击 your profile ，</p>
-<p><img src="/2019/07/16/GitHub-Pages申请和设置/image-20190717104757029.png" alt="进入 your profile"></p>
-</li>
-</ul>
-<p>你就可以看到你刚刚新建的 ***.github.io 点击进入，找到settings并点击进入，鼠标下拉在页面中找到 GitHub Pages </p>
-<p><img src="/2019/07/16/GitHub-Pages申请和设置/image-20190717105342634.png" alt="设置 GitHub Pages"></p>
-<p>图中绿色提示部分在第一次新建的时候可能会和我不同，我这个是已经设置完成以后的，这里你不用管这个提示，你只要店家箭头标注的按钮 Choose a theme </p>
-<p>进入以后随便选一个，因为后期我们还要自己对 theme 更改，选完之后点击 Select theme 就可。这步比较简单就不给出图片了。</p>
-<p>到这里完成 GitHub Pages 申请和设置，下一节将介绍如何将本地的 Hexo 托管到 GitHub里 从而完成整个微博的部署。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/16/GitHub-Pages申请和设置/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
